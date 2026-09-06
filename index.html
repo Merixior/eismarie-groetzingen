@@ -84,12 +84,12 @@
                         let sorte = row[1];
                         let beschreibung = row[2] || '';
                         
-                        // Hier löschen wir jegliche versehentlichen €-Zeichen aus den Spalten sofort heraus
-                        let euroTeil = (row[3] || '0').replace(/€/g, '').trim();
-                        let centTeil = (row[4] || '00').replace(/€/g, '').trim();
+                        let euroTeil = (row[3] || '').replace(/€/g, '').trim();
+                        let centTeil = (row[4] || '').replace(/€/g, '').trim();
                         let preis = '';
 
-                        if (euroTeil !== '') {
+                        // Preis nur berechnen, wenn ein Euro-Wert eingetragen ist
+                        if (euroTeil !== '' && euroTeil !== '0') {
                             if (centTeil.length === 1) {
                                 centTeil = centTeil + '0';
                             }
@@ -151,6 +151,8 @@
             filteredItems.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center transition-all hover:shadow-md";
+                
+                // Wenn kein Preis vorhanden ist, passt sich das Layout an (nur Sorte & Beschreibung)
                 card.innerHTML = `
                     <div class="space-y-1 pr-3">
                         <span class="text-[10px] uppercase tracking-wider font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-md inline-block">${item.kategorie}</span>
