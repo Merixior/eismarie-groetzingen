@@ -87,17 +87,16 @@
                         let preis = '';
 
                         if (preisRaw !== '') {
-                            // Wenn bereits ein Euro-Zeichen oder Text drin steht, übernehmen wir es
-                            if (preisRaw.includes('€') || isNaN(preisRaw.replace(',', '.'))) {
-                                preis = preisRaw;
+                            // Bereinige den Wert von jeglichen alten Euro-Zeichen, um sie garantiert hinten anzustellen
+                            let cleanNumStr = preisRaw.replace('€', '').trim().replace(',', '.');
+                            let num = parseFloat(cleanNumStr);
+
+                            if (!isNaN(num)) {
+                                // Wenn es eine reine Zahl ist, formatieren wir sie sauber mit Komma und € hinten
+                                preis = num.toFixed(2).replace('.', ',') + ' €';
                             } else {
-                                // Versuche eine saubere Zahl draus zu machen (z.B. "1.5" -> "1,50 €" oder "2" -> "2,00 €")
-                                let num = parseFloat(preisRaw.replace(',', '.'));
-                                if (!isNaN(num)) {
-                                    preis = num.toFixed(2).replace('.', ',') + ' €';
-                                } else {
-                                    preis = preisRaw + ' €';
-                                }
+                                // Falls es Text ist (z.B. "Auf Anfrage"), bleibt es so
+                                preis = preisRaw;
                             }
                         }
 
