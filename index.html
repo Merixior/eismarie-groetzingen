@@ -79,17 +79,26 @@
                 allItems = [];
 
                 rows.forEach(row => {
-                    // Wir prüfen, ob mindestens Spalte B (Sorte) existiert
                     if (row.length >= 2 && row[1] && row[1] !== "") {
                         let kategorie = row[0] || 'Sorten';
                         let sorte = row[1];
                         let beschreibung = row[2] || '';
-                        let preis = row[3] || '';
+                        let preisRaw = row[3] || '';
+                        let preis = '';
 
-                        // Formatierung für das Euro-Zeichen hinter der Ziffer, falls nötig
-                        if (preis && !preis.includes('€')) {
-                            // Wenn z.B. "3" oder "3.50" dasteht, machen wir "3,50 €" draus
-                            preis = preis.replace('.', ',') + ' €';
+                        if (preisRaw !== '') {
+                            // Wenn bereits ein Euro-Zeichen oder Text drin steht, übernehmen wir es
+                            if (preisRaw.includes('€') || isNaN(preisRaw.replace(',', '.'))) {
+                                preis = preisRaw;
+                            } else {
+                                // Versuche eine saubere Zahl draus zu machen (z.B. "1.5" -> "1,50 €" oder "2" -> "2,00 €")
+                                let num = parseFloat(preisRaw.replace(',', '.'));
+                                if (!isNaN(num)) {
+                                    preis = num.toFixed(2).replace('.', ',') + ' €';
+                                } else {
+                                    preis = preisRaw + ' €';
+                                }
+                            }
                         }
 
                         allItems.push({
