@@ -79,25 +79,26 @@
                 allItems = [];
 
                 rows.forEach(row => {
+                    // Prüfen, ob Spalte B (Sorte) existiert
                     if (row.length >= 2 && row[1] && row[1] !== "") {
                         let kategorie = row[0] || 'Sorten';
                         let sorte = row[1];
                         let beschreibung = row[2] || '';
-                        let preisRaw = row[3] || '';
+                        
+                        let euroTeil = row[3] || '0';
+                        let centTeil = row[4] || '00';
                         let preis = '';
 
-                        if (preisRaw !== '') {
-                            // Bereinige den Wert von jeglichen alten Euro-Zeichen, um sie garantiert hinten anzustellen
-                            let cleanNumStr = preisRaw.replace('€', '').trim().replace(',', '.');
-                            let num = parseFloat(cleanNumStr);
-
-                            if (!isNaN(num)) {
-                                // Wenn es eine reine Zahl ist, formatieren wir sie sauber mit Komma und € hinten
-                                preis = num.toFixed(2).replace('.', ',') + ' €';
-                            } else {
-                                // Falls es Text ist (z.B. "Auf Anfrage"), bleibt es so
-                                preis = preisRaw;
+                        // Wenn eine Euro-Ziffer da ist, bauen wir sie mit den Cent zusammen
+                        if (euroTeil !== '') {
+                            // Falls Cent nur eine Ziffer hat (z.B. "5" statt "50"), hängen wir eine 0 an
+                            if (centTeil.length === 1) {
+                                centTeil = centTeil + '0';
                             }
+                            if (centTeil === '' || centTeil === '0') {
+                                centTeil = '00';
+                            }
+                            preis = euroTeil + ',' + centTeil + ' €';
                         }
 
                         allItems.push({
