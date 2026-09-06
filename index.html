@@ -13,29 +13,23 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
 
     <div class="w-full">
-        <!-- Moderner, cleaner Header mit markantem "Seit 1924" Bezug -->
-        <header class="bg-gradient-to-b from-sky-500 to-sky-600 text-white pt-10 pb-10 px-6 text-center shadow-md rounded-b-[2.5rem]">
-            <div class="max-w-md mx-auto">
-                <span class="inline-block bg-white/20 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase mb-3 text-sky-50">
-                    Tageskarte
-                </span>
+        <!-- Aufgeräumter, edler Header -->
+        <header class="bg-sky-600 text-white pt-8 pb-12 px-6 text-center shadow-sm rounded-b-[2.5rem]">
+            <div class="max-w-md mx-auto space-y-2">
+                <!-- Name & Tradition kombiniert -->
                 <h1 class="text-3xl font-extrabold tracking-tight">🍦 Eismarie</h1>
-                <!-- Markanter Traditionshinweis direkt unter dem Namen -->
-                <div class="mt-1.5 inline-flex items-center gap-1.5 text-sky-100 font-semibold text-xs tracking-widest uppercase bg-sky-700/30 px-3 py-1 rounded-full border border-sky-400/30">
-                    <span>✨</span> Tradition & Handwerkskunst seit 1924
-                </div>
-                <p class="text-sky-100 mt-3 text-sm font-medium opacity-90">Frisch für dich zubereitet – Entdecke unsere aktuellen Sorten</p>
+                <p class="text-xs font-bold tracking-widest uppercase text-sky-200">Handwerkskunst & Tradition seit 1924</p>
             </div>
         </header>
 
         <!-- Hauptinhalt -->
-        <main class="max-w-md mx-auto px-5 -mt-4">
+        <main class="max-w-md mx-auto px-5 -mt-6">
             
-            <!-- Kategorie-Filter Buttons -->
-            <div id="filter-container" class="flex gap-2 overflow-x-auto no-scrollbar py-3 mb-2 px-1">
+            <!-- Kategorie-Filter (Deutlich kontraststärker) -->
+            <div id="filter-container" class="flex gap-2 overflow-x-auto no-scrollbar py-2 mb-4 px-1">
                 <!-- Buttons werden hier per JavaScript generiert -->
             </div>
 
@@ -54,7 +48,7 @@
             <a href="https://www.eismarie.de/impressum" target="_blank" class="hover:text-slate-600 underline mr-2">Impressum</a> | 
             <a href="https://www.eismarie.de/datenschutz" target="_blank" class="hover:text-slate-600 underline ml-2">Datenschutz</a>
         </p>
-        <!-- Deine digitale Visitenkarte -->
+        <!-- Digitale Visitenkarte -->
         <p class="pt-4 text-slate-500 font-medium tracking-wide border-t border-slate-200/60 max-w-xs mx-auto">
             Digital Solution by <a href="https://merixior.com" target="_blank" class="text-sky-600 font-semibold hover:underline">Merixior</a>
         </p>
@@ -128,10 +122,11 @@
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 const isActive = cat === activeCategory;
-                btn.className = `px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all shadow-sm ${
+                // Aktiver Button hebt sich jetzt dunkel und kontraststark ab
+                btn.className = `px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all shadow-sm ${
                     isActive 
-                        ? 'bg-sky-600 text-white shadow-sky-200' 
-                        : 'bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-100'
+                        ? 'bg-slate-900 text-white shadow-md scale-105' 
+                        : 'bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50'
                 }`;
                 btn.innerText = cat;
                 btn.onclick = () => {
